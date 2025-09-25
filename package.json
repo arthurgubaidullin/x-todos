@@ -1,0 +1,5 @@
+{
+  "name": "@x-todos/source",
+  "type": "module",
+  "private": true
+}
