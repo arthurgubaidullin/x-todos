@@ -50,7 +50,9 @@
         "-D",
         "clippy::pedantic",
         "-W",
-        "clippy::nursery"
+        "clippy::nursery",
+        "-A",
+        "clippy::missing_errors_doc"
       ],
       "problemMatcher": ["$rustc"],
       "group": {
