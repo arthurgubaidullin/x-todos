@@ -1,5 +1,9 @@
 {
   "name": "@x-todos/source",
   "type": "module",
-  "private": true
+  "private": true,
+  "workspaces": [
+    "hello-wasm/pkg",
+    "web"
+  ]
 }
