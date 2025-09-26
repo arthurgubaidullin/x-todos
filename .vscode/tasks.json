@@ -2,6 +2,26 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "type": "shell",
+      "command": "turbo",
+      "args": ["build"],
+      "problemMatcher": ["$tsc", "$eslint-compact"],
+      "group": {
+        "kind": "none",
+        "isDefault": false
+      },
+      "label": "turbo: build",
+      "icon": { "id": "gear" },
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "dedicated",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
       "type": "cargo",
       "command": "build",
       "args": ["--target", "wasm32-unknown-unknown"],
@@ -97,7 +117,8 @@
         "cargo: build",
         "cargo: test",
         "cargo: clippy",
-        "cargo: build --target wasm32-unknown-unknown"
+        "cargo: build --target wasm32-unknown-unknown",
+        "turbo: build"
       ],
       "group": {
         "kind": "build",
