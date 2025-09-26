@@ -19,11 +19,11 @@ impl Service {
         todo_id: &str,
         new_todo: &NewTodo,
     ) -> Result<Todo, Box<dyn std::error::Error>> {
-        let todo_id = todo_id.into();
+        let todo_id = Box::from(todo_id);
 
-        let persisted_todo = PersistedTodo::new(new_todo.text());
+        let persisted_todo = PersistedTodo::new(&todo_id, new_todo.text());
 
-        let todo = Todo::new(new_todo.text());
+        let todo = Todo::new(&todo_id, new_todo.text());
 
         self.db
             .write()
