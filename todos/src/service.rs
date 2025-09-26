@@ -14,8 +14,12 @@ impl Service {
         Self { db: Arc::default() }
     }
 
-    pub fn add(&self, new_todo: &NewTodo) -> Result<Todo, Box<dyn std::error::Error>> {
-        let todo_id = "id";
+    pub fn add(
+        &self,
+        todo_id: &str,
+        new_todo: &NewTodo,
+    ) -> Result<Todo, Box<dyn std::error::Error>> {
+        let todo_id = todo_id.into();
 
         let persisted_todo = PersistedTodo::new(new_todo.text());
 
@@ -25,10 +29,10 @@ impl Service {
             .write()
             .map_err(|_| Error::Internal)
             .and_then(|mut db| {
-                if db.contains_key(todo_id) {
+                if db.contains_key(&todo_id) {
                     return Err(Error::AlreadyExists);
                 }
-                db.insert(todo_id.into(), persisted_todo);
+                db.insert(todo_id, persisted_todo);
 
                 Ok(())
             })?;
@@ -72,7 +76,7 @@ mod tests {
 
         let todos = Service::new();
 
-        todos.add(new_todo).unwrap();
+        todos.add("test", new_todo).unwrap();
 
         assert_eq!(todos.all().unwrap().len(), 1);
     }
@@ -83,8 +87,8 @@ mod tests {
 
         let todos = Service::new();
 
-        todos.add(new_todo).unwrap();
+        todos.add("test", new_todo).unwrap();
 
-        assert!(todos.add(new_todo).is_err());
+        assert!(todos.add("test", new_todo).is_err());
     }
 }
