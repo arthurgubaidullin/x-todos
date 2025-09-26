@@ -2,8 +2,9 @@
   "$schema": "https://turborepo.com/schema.json",
   "tasks": {
     "build": {
+      "passThroughEnv": ["CARGO_HOME", "RUSTUP_HOME"],
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**", "pkg"]
     },
     "dev": {
       "persistent": true,
