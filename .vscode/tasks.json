@@ -4,7 +4,7 @@
     {
       "type": "shell",
       "command": "turbo",
-      "args": ["build"],
+      "args": ["build", "test", "lint"],
       "problemMatcher": ["$tsc", "$eslint-compact"],
       "group": {
         "kind": "none",
@@ -16,7 +16,7 @@
           "DO_NOT_TRACK": "1"
         }
       },
-      "label": "turbo: build",
+      "label": "turbo: build test lint",
       "icon": { "id": "gear" },
       "presentation": {
         "echo": true,
@@ -36,7 +36,7 @@
         "kind": "build",
         "isDefault": false
       },
-      "label": "cargo: build --target wasm32-unknown-unknown",
+      "label": "cargo: build --target wasm32",
       "icon": { "id": "gear" },
       "presentation": {
         "echo": true,
@@ -123,8 +123,8 @@
         "cargo: build",
         "cargo: test",
         "cargo: clippy",
-        "cargo: build --target wasm32-unknown-unknown",
-        "turbo: build"
+        "cargo: build --target wasm32",
+        "turbo: build test lint"
       ],
       "group": {
         "kind": "build",
