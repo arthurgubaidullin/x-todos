@@ -10,6 +10,12 @@
         "kind": "none",
         "isDefault": false
       },
+      "options": {
+        "env": {
+          "TURBO_TELEMETRY_DISABLED": "1",
+          "DO_NOT_TRACK": "1"
+        }
+      },
       "label": "turbo: build",
       "icon": { "id": "gear" },
       "presentation": {
