@@ -37,6 +37,11 @@
         "GitHub.vscode-pull-request-github"
       ]
     }
+  },
+
+  "remoteEnv": {
+    "TURBO_TELEMETRY_DISABLED": "1",
+    "DO_NOT_TRACK": "1"
   }
 
   // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
