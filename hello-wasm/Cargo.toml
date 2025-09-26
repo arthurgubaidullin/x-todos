@@ -7,4 +7,5 @@ edition = "2024"
 crate-type = ["cdylib"]
 
 [dependencies]
+todos = { path = "../todos" }
 wasm-bindgen = "0.2.104"
