@@ -1,0 +1,9 @@
+{
+  "name": "@x-todos/todos-wasm-dev",
+  "scripts": {
+    "build": "wasm-pack build"
+  },
+  "type": "module",
+  "private": true,
+  "files": []
+}
