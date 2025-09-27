@@ -30,27 +30,6 @@
     {
       "type": "cargo",
       "command": "build",
-      "args": ["--target", "wasm32-unknown-unknown"],
-      "problemMatcher": ["$rustc"],
-      "group": {
-        "kind": "build",
-        "isDefault": false
-      },
-      "label": "cargo: build --target wasm32",
-      "icon": { "id": "gear" },
-      "presentation": {
-        "echo": true,
-        "reveal": "silent",
-        "focus": false,
-        "panel": "dedicated",
-        "showReuseMessage": true,
-        "clear": true
-      },
-      "dependsOn": ["cargo: build"]
-    },
-    {
-      "type": "cargo",
-      "command": "build",
       "problemMatcher": ["$rustc"],
       "group": {
         "kind": "build",
@@ -123,7 +102,6 @@
         "cargo: build",
         "cargo: test",
         "cargo: clippy",
-        "cargo: build --target wasm32",
         "turbo: build test lint"
       ],
       "group": {
