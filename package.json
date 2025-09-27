@@ -3,9 +3,9 @@
   "type": "module",
   "private": true,
   "workspaces": [
-    "tools/*",
-    "web-client/*",
-    "web"
+    "client-side/tools/*",
+    "client-side/web-client/*",
+    "client-side/web"
   ],
   "devDependencies": {
     "@eslint/js": "^9.36.0",
