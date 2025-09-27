@@ -17,8 +17,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - run: rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }} && rustup component add clippy && rustup target add wasm32-unknown-unknown
+      - run: rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }} && rustup component add clippy
       - run: cargo build --verbose
-      - run: cargo build --verbose --target wasm32-unknown-unknown
       - run: cargo test --verbose
       - run: cargo clippy --verbose -- -D clippy::all -D clippy::pedantic -W clippy::nursery -W clippy::missing_errors_doc
