@@ -18,24 +18,26 @@ async fn main() {
         .with(tracing_subscriber::fmt::layer())
         .init();
 
-    let app =
-        Router::new()
-            .route("/", get(handler))
-            .layer(
-                TraceLayer::new_for_http().make_span_with(|request: &Request<_>| {
-                    let matched_path = request
-                        .extensions()
-                        .get::<MatchedPath>()
-                        .map(MatchedPath::as_str);
+    let todos_router = todos_axum::router();
 
-                    info_span!(
-                        "http_request",
-                        method = ?request.method(),
-                        matched_path,
-                        some_other_field = tracing::field::Empty,
-                    )
-                }),
-            );
+    let app = Router::new()
+        .route("/", get(handler))
+        .nest("/todos", todos_router)
+        .layer(
+            TraceLayer::new_for_http().make_span_with(|request: &Request<_>| {
+                let matched_path = request
+                    .extensions()
+                    .get::<MatchedPath>()
+                    .map(MatchedPath::as_str);
+
+                info_span!(
+                    "http_request",
+                    method = ?request.method(),
+                    matched_path,
+                    some_other_field = tracing::field::Empty,
+                )
+            }),
+        );
 
     let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
         .await
