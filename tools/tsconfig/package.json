@@ -1,0 +1,13 @@
+{
+  "name": "@x-todos/tsconfig",
+  "type": "module",
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  },
+  "private": true,
+  "files": [
+    "tsconfig.json"
+  ]
+}
