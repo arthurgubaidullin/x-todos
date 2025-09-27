@@ -1,0 +1,11 @@
+{
+  "extends": "@x-todos/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "tsBuildInfoFile": "node_modules/.tmp/lint.tsbuildinfo",
+    "isolatedDeclarations": false
+  },
+  "files": [],
+  "include": ["eslint.config.ts"],
+  "exclude": []
+}
