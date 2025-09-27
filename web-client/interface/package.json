@@ -1,0 +1,19 @@
+{
+  "name": "@x-todos/web-client",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prebuild": "rm -rf dist node_modules/.tmp/tsconfig.build.tsbuildinfo",
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest . --run",
+    "lint": "eslint ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@x-todos/tsconfig": "*",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "private": true
+}
