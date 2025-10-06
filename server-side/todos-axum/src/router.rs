@@ -24,7 +24,7 @@ async fn add_new_todo(
     Json(new_todo): Json<NewTodoResource>,
 ) -> impl IntoResponse {
     todos
-        .add(&todo_id, &todos::NewTodo::new(new_todo.text()))
+        .add(&todo_id, &new_todo)
         .map(TodoResource::from)
         .map(|resource| (StatusCode::CREATED, resource))
         .map_err(|error| {

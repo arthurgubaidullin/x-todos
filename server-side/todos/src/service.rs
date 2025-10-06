@@ -1,4 +1,4 @@
-use crate::{error::Error, new_todo::NewTodo, persisted_todo::PersistedTodo, todo::Todo};
+use crate::{NewTodo, error::Error, persisted_todo::PersistedTodo, todo::Todo};
 use std::{
     collections::HashMap,
     sync::{Arc, RwLock},
@@ -18,7 +18,7 @@ impl Service {
     pub fn add(
         &self,
         todo_id: &str,
-        new_todo: &NewTodo,
+        new_todo: &impl NewTodo,
     ) -> Result<Todo, Box<dyn std::error::Error>> {
         let todo_id = Box::from(todo_id);
 
@@ -64,6 +64,24 @@ impl Default for Service {
 mod tests {
     use super::*;
 
+    #[derive(Debug, Clone)]
+    pub struct NewTodoS {
+        text: Box<str>,
+    }
+
+    impl NewTodoS {
+        #[must_use]
+        pub fn new(text: &str) -> Self {
+            Self { text: text.into() }
+        }
+    }
+
+    impl NewTodo for NewTodoS {
+        fn text(&self) -> &str {
+            &self.text
+        }
+    }
+
     #[test]
     fn create() {
         let todos = Service::new();
@@ -73,7 +91,7 @@ mod tests {
 
     #[test]
     fn add() {
-        let new_todo = &NewTodo::new("Add new todo");
+        let new_todo = &NewTodoS::new("Add new todo");
 
         let todos = Service::new();
 
@@ -84,7 +102,7 @@ mod tests {
 
     #[test]
     fn add_twice() {
-        let new_todo = &NewTodo::new("Add new todo");
+        let new_todo = &NewTodoS::new("Add new todo");
 
         let todos = Service::new();
 

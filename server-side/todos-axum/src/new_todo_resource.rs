@@ -5,9 +5,8 @@ pub struct NewTodoResource {
     text: Box<str>,
 }
 
-impl NewTodoResource {
-    #[must_use]
-    pub fn text(&self) -> &str {
+impl todos::NewTodo for NewTodoResource {
+    fn text(&self) -> &str {
         &self.text
     }
 }
