@@ -9,7 +9,9 @@
     "test": "vitest . --run",
     "lint": "eslint ."
   },
-  "dependencies": {},
+  "dependencies": {
+    "@x-todos/web-client": "*"
+  },
   "devDependencies": {
     "@x-todos/tsconfig": "*",
     "typescript": "^5.9.2",
