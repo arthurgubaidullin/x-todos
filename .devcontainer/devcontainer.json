@@ -31,11 +31,12 @@
     "vscode": {
       "extensions": [
         "esbenp.prettier-vscode",
-        "ms-azuretools.vscode-docker",
-        "streetsidesoftware.code-spell-checker",
         "github.vscode-github-actions",
         "GitHub.vscode-pull-request-github",
-        "vitest.explorer"
+        "ms-azuretools.vscode-docker",
+        "streetsidesoftware.code-spell-checker",
+        "vitest.explorer",
+        "Vue.volar"
       ]
     }
   },
