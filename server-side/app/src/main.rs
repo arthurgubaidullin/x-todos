@@ -20,7 +20,8 @@ async fn main() {
 
     let todos_service = todos::Service::new();
 
-    let todos_router = todos_axum::router("http://localhost:3000/todos", todos_service).unwrap();
+    let todos_router =
+        todos_axum::router("http://localhost:5173/api/todos", todos_service).unwrap();
 
     let app = Router::new()
         .route("/", get(handler))
