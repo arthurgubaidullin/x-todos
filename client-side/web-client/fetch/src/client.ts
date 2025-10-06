@@ -31,6 +31,9 @@ export class FetchClient implements WebClient {
     await fetch(relations.create.replace(":id", crypto.randomUUID()), {
       method: "PUT",
       body: JSON.stringify(newTodo),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     return await this.todos();
