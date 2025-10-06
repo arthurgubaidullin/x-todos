@@ -3,6 +3,7 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.build.tsbuildinfo",
     "outDir": "dist",
+    "lib": ["ESNext", "DOM"],
     "rootDir": "src"
   },
   "include": ["src/**/*.ts"],
