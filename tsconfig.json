@@ -3,9 +3,10 @@
   "compilerOptions": {
     "rootDir": ".",
     "tsBuildInfoFile": "node_modules/.tmp/lint.tsbuildinfo",
-    "isolatedDeclarations": false
+    "isolatedDeclarations": false,
+    "lib": ["ESNext"]
   },
   "files": [],
   "include": ["eslint.config.ts"],
-  "exclude": []
+  "exclude": ["node_modules"]
 }
