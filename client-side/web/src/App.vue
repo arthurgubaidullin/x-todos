@@ -9,7 +9,7 @@ const client: WebClient = new FetchClient("http://localhost:5173/api/todos");
 
 <template>
   <div>
-    <TodoList />
+    <TodoList :client="client" />
     <hr />
     <NewTodoForm :client="client" />
   </div>
