@@ -4,6 +4,7 @@ use std::{
     sync::{Arc, RwLock},
 };
 
+#[derive(Debug, Clone)]
 pub struct Service {
     db: Arc<RwLock<HashMap<Box<str>, PersistedTodo>>>,
 }
