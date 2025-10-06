@@ -1,8 +1,19 @@
 <script setup lang="ts">
+import type { WebClient } from "@x-todos/web-client";
+import { ref } from "vue";
+
+const props = defineProps<{ client: WebClient }>();
+
+const { client } = props;
+
+const text = ref("");
+
 const onSubmit = (event: Event) => {
   event.preventDefault();
 
-  alert("Ok!");
+  client.add({ text: text.value });
+
+  text.value = "";
 };
 </script>
 
@@ -12,7 +23,7 @@ const onSubmit = (event: Event) => {
 
     <label>
       Text:
-      <input type="text" name="text" required />
+      <input v-model="text" type="text" name="text" required />
     </label>
 
     <input type="submit" />
