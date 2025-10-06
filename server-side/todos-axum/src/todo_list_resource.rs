@@ -13,6 +13,18 @@ pub struct TodoListResource {
     pub(crate) next: Option<Box<str>>,
 }
 
+impl From<Vec<todos::Todo>> for TodoListResource {
+    fn from(todos: Vec<todos::Todo>) -> Self {
+        let items = todos.into_iter().map(TodoResource::from).collect();
+
+        Self {
+            items,
+            previous: None,
+            next: None,
+        }
+    }
+}
+
 impl IntoResponse for TodoListResource {
     fn into_response(self) -> axum::response::Response {
         Json(self).into_response()
