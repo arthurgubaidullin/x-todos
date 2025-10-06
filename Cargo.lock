@@ -558,6 +558,7 @@ name = "server"
 version = "0.1.0"
 dependencies = [
  "axum",
+ "todos",
  "todos-axum",
  "tokio",
  "tower-http",
@@ -642,6 +643,7 @@ dependencies = [
  "axum",
  "serde",
  "todos",
+ "tracing",
 ]
 
 [[package]]
