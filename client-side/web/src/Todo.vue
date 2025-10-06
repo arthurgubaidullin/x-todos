@@ -1,5 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { Todo } from "@x-todos/web-client";
+
+const props = defineProps<{ data: Todo }>();
+
+const todo = props.data.text;
+</script>
 
 <template>
-  <div>Eat cookies!</div>
+  <div>{{ todo }}</div>
 </template>
