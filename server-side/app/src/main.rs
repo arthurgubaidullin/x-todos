@@ -18,7 +18,9 @@ async fn main() {
         .with(tracing_subscriber::fmt::layer())
         .init();
 
-    let todos_router = todos_axum::router();
+    let todos_service = todos::Service::new();
+
+    let todos_router = todos_axum::router(todos_service);
 
     let app = Router::new()
         .route("/", get(handler))
