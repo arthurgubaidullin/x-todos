@@ -1,4 +1,4 @@
-import type { Todos, WebClient } from "@x-todos/web-client";
+import type { NewTodo, Todos, WebClient } from "@x-todos/web-client";
 import type { RootResource } from "./root-resource.js";
 import type { TodoListResource } from "./todo-list-resource.js";
 
@@ -25,10 +25,13 @@ export class FetchClient implements WebClient {
     return data;
   }
 
-  async add(this: this): Promise<Todos> {
+  async add(this: this, newTodo: NewTodo): Promise<Todos> {
     const relations = await this.relations();
 
-    await fetch(relations.create);
+    await fetch(relations.create.replace(":id", crypto.randomUUID()), {
+      method: "PUT",
+      body: JSON.stringify(newTodo),
+    });
 
     return await this.todos();
   }
