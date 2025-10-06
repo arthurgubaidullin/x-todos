@@ -1,1 +1,1 @@
-export {};
+export { FetchClient } from "./client.js";
