@@ -1,6 +1,6 @@
 use crate::{
-    new_todo_resource::NewTodoResource, services::Services, todo_list_resource::TodoListResource,
-    todo_resource::TodoResource,
+    new_todo_resource::NewTodoResource, root_resource::RootResource, services::Services,
+    todo_list_resource::TodoListResource, todo_resource::TodoResource,
 };
 use axum::{
     Json, Router,
@@ -39,6 +39,10 @@ async fn add_new_todo(
         })
 }
 
+async fn resources(State(services): State<Services>) -> impl IntoResponse {
+    RootResource::new(services.prefix())
+}
+
 pub fn router(
     prefix: &str,
     todos_service: todos::Service,
@@ -46,6 +50,7 @@ pub fn router(
     let services = Services::new(prefix.parse()?, todos_service);
 
     Ok(Router::new()
+        .route("/", get(resources))
         .route("/items", get(get_all_todos))
         .route("/items/{id}", put(add_new_todo))
         .with_state(services))
