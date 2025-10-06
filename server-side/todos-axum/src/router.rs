@@ -1,11 +1,22 @@
-use axum::{Router, http::StatusCode, response::IntoResponse, routing::get};
+use crate::{todo_list_resource::TodoListResource, todo_resource::TodoResource};
+use axum::{Router, response::IntoResponse, routing::get};
 
 async fn get_all_todos() -> impl IntoResponse {
-    StatusCode::NOT_IMPLEMENTED
+    TodoListResource {
+        items: vec![TodoResource {
+            id: "test".into(),
+            text: "lol".into(),
+        }],
+        next: None,
+        previous: None,
+    }
 }
 
 async fn add_new_todo() -> impl IntoResponse {
-    StatusCode::NOT_IMPLEMENTED
+    TodoResource {
+        id: "test".into(),
+        text: "lol".into(),
+    }
 }
 
 pub fn router() -> Router {
