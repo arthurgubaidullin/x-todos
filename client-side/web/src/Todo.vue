@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Todo } from "@x-todos/web-client";
+import type { Todo } from "@x-todos/vue-client-interface";
 
 const props = defineProps<{ data: Todo }>();
 
