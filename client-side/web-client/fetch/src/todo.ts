@@ -17,7 +17,7 @@ export class Todo implements _Todo {
   }
 
   async remove(this: this): Promise<void> {
-    await fetch(this.#data.remove, {
+    await fetch(this.#data.links.remove, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
