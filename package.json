@@ -6,7 +6,7 @@
     "client-side/tools/*",
     "client-side/web-client/*",
     "client-side/vue-client/*",
-    "client-side/web"
+    "client-side/web-app"
   ],
   "devDependencies": {
     "@eslint/js": "^9.36.0",
