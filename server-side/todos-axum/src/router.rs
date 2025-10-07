@@ -41,6 +41,21 @@ async fn add_new_todo(
         })
 }
 
+async fn remove_todo(
+    Path(todo_id): Path<String>,
+    State(services): State<Services>,
+) -> impl IntoResponse {
+    services
+        .todos()
+        .remove(&todo_id)
+        .map(|()| StatusCode::NO_CONTENT)
+        .map_err(|error| {
+            tracing::error!(error);
+
+            StatusCode::INTERNAL_SERVER_ERROR
+        })
+}
+
 async fn resources(State(services): State<Services>) -> impl IntoResponse {
     RootResource::new(services.prefix())
 }
@@ -54,6 +69,6 @@ pub fn router(
     Ok(Router::new()
         .route("/", get(resources))
         .route("/items", get(get_all_todos))
-        .route("/items/{id}", put(add_new_todo))
+        .route("/items/{id}", put(add_new_todo).delete(remove_todo))
         .with_state(services))
 }
