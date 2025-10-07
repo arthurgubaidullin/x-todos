@@ -14,6 +14,7 @@ async fn get_all_todos(State(services): State<Services>) -> impl IntoResponse {
     services
         .todos()
         .all()
+        .map(|todos| (services.prefix(), todos))
         .map(TodoListResource::from)
         .map_err(|error| {
             tracing::error!(error);
@@ -30,6 +31,7 @@ async fn add_new_todo(
     services
         .todos()
         .add(&todo_id, &new_todo)
+        .map(|todo| (services.prefix(), todo))
         .map(TodoResource::from)
         .map(|resource| (StatusCode::CREATED, resource))
         .map_err(|error| {

@@ -1,5 +1,5 @@
 use crate::todo_resource::TodoResource;
-use axum::{Json, response::IntoResponse};
+use axum::{Json, http::Uri, response::IntoResponse};
 use serde::Serialize;
 
 #[derive(Debug, Serialize)]
@@ -13,9 +13,13 @@ pub struct TodoListResource {
     pub(crate) next: Option<Box<str>>,
 }
 
-impl From<Vec<todos::Todo>> for TodoListResource {
-    fn from(todos: Vec<todos::Todo>) -> Self {
-        let items = todos.into_iter().map(TodoResource::from).collect();
+impl From<(&Uri, Vec<todos::Todo>)> for TodoListResource {
+    fn from((prefix, todos): (&Uri, Vec<todos::Todo>)) -> Self {
+        let items = todos
+            .into_iter()
+            .map(|todo| (prefix, todo))
+            .map(TodoResource::from)
+            .collect();
 
         Self {
             items,

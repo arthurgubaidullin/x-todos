@@ -1,17 +1,31 @@
-use axum::{Json, response::IntoResponse};
+use axum::{Json, http::Uri, response::IntoResponse};
 use serde::Serialize;
+use std::rc::Rc;
+
+#[derive(Debug, Serialize)]
+struct Links {
+    #[serde(rename = "self")]
+    itself: Rc<str>,
+    remove: Rc<str>,
+}
 
 #[derive(Debug, Serialize)]
 pub struct TodoResource {
-    pub(crate) id: Box<str>,
-    pub(crate) text: Box<str>,
+    id: Box<str>,
+    text: Box<str>,
+    links: Links,
 }
 
-impl From<todos::Todo> for TodoResource {
-    fn from(value: todos::Todo) -> Self {
+impl From<(&Uri, todos::Todo)> for TodoResource {
+    fn from((uri, value): (&Uri, todos::Todo)) -> Self {
+        let link: Rc<str> = format!("{}/items/{}", uri, value.id()).into();
         Self {
             id: value.id().into(),
             text: value.text().into(),
+            links: Links {
+                itself: link.clone(),
+                remove: link,
+            },
         }
     }
 }
