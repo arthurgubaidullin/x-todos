@@ -41,16 +41,24 @@ impl Service {
         Ok(todo)
     }
 
+    pub fn remove(&self, todo_id: &str) -> Result<(), Box<dyn std::error::Error>> {
+        Ok(self
+            .db
+            .write()
+            .map_err(|_| Error::Internal)?
+            .remove(todo_id)
+            .ok_or(Error::NotExists)
+            .map(|_| ())?)
+    }
+
     pub fn all(&self) -> Result<Vec<Todo>, Box<dyn std::error::Error>> {
-        let a = self
+        Ok(self
             .db
             .read()
             .map_err(|_| Error::Internal)?
             .values()
             .map(Todo::from)
-            .collect();
-
-        Ok(a)
+            .collect())
     }
 }
 
@@ -109,5 +117,27 @@ mod tests {
         todos.add("test", new_todo).unwrap();
 
         assert!(todos.add("test", new_todo).is_err());
+    }
+
+    #[test]
+    fn remove() {
+        let new_todo = &NewTodoS::new("Add new todo");
+
+        let todos = Service::new();
+
+        let todo_id = "test";
+        todos.add(todo_id, new_todo).unwrap();
+        todos.remove(todo_id).unwrap();
+
+        assert_eq!(todos.all().unwrap().len(), 0);
+    }
+
+    #[test]
+    fn remove_not_existed() {
+        let todos = Service::new();
+
+        let todo_id = "test";
+
+        assert!(todos.remove(todo_id).is_err());
     }
 }
