@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { WebClient } from "@x-todos/web-client";
+import type { AddNewTodo } from "@x-todos/vue-client-interface";
 import { ref } from "vue";
 
-const props = defineProps<{ client: WebClient }>();
+const props = defineProps<{ client: AddNewTodo }>();
 
 const { client } = props;
 

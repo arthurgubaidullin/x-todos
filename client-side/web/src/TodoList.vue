@@ -1,25 +1,18 @@
 <script setup lang="ts">
-import type { Todos, WebClient } from "@x-todos/web-client";
+import type { GetTodos } from "@x-todos/vue-client-interface";
 import Todo from "./Todo.vue";
-import { onMounted, ref } from "vue";
 
-const props = defineProps<{ client: WebClient }>();
+const props = defineProps<{ client: GetTodos }>();
 
 const { client } = props;
 
-const todos = ref<Todos | null>(null);
-
-onMounted(async () => {
-  const data = await client.todos();
-
-  todos.value = data;
-});
+const todos = client.todos;
 </script>
 
 <template>
   <h1>Todo list</h1>
   <ul>
-    <li v-if="todos !== null" v-for="todo in todos.items" :key="todo.id">
+    <li v-if="todos !== null" v-for="todo in todos" :key="todo.id">
       <Todo :data="todo" />
     </li>
   </ul>
