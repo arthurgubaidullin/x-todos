@@ -3,9 +3,9 @@ import type { Todo } from "@x-todos/vue-client-interface";
 
 const props = defineProps<{ data: Todo }>();
 
-const todo = props.data.text;
+const todo = props.data;
 </script>
 
 <template>
-  <div>{{ todo }}</div>
+  <div>{{ todo.text }} — <button @click="todo.remove()">Remove</button></div>
 </template>
