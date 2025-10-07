@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@x-todos/web-client": "*",
-    "@x-todos/vue-client-interface": "*"
+    "@x-todos/vue-client-interface": "*",
+    "vue": "^3.5.22"
   },
   "devDependencies": {
     "@x-todos/tsconfig": "*",
