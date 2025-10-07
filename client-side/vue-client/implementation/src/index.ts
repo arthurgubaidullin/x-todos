@@ -1,1 +1,1 @@
-export {};
+export * from "./vue-client.js";
