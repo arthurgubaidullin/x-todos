@@ -4,6 +4,7 @@ use std::fmt::Display;
 pub enum Error {
     Internal,
     AlreadyExists,
+    NotExists,
 }
 
 impl Display for Error {
@@ -14,6 +15,9 @@ impl Display for Error {
             }
             Self::AlreadyExists => {
                 write!(f, "Already exists.")
+            }
+            Self::NotExists => {
+                write!(f, "Not exists.")
             }
         }
     }
