@@ -4,5 +4,6 @@ mod router;
 mod services;
 mod todo_list_resource;
 mod todo_resource;
+mod updated_todo_resource;
 
 pub use router::router;
