@@ -16,6 +16,17 @@ export class Todo implements _Todo {
     return this.#data.text;
   }
 
+  async update(this: this, data: Readonly<{ text: string }>): Promise<void> {
+    await fetch(this.#data.links.update, {
+      method: "POST",
+      body: JSON.stringify({ text: data.text }),
+      headers: {
+        "Content-Type": "application/json",
+        "If-Match": `"${this.#data.version}"`,
+      },
+    });
+  }
+
   async remove(this: this): Promise<void> {
     await fetch(this.#data.links.remove, {
       method: "DELETE",
