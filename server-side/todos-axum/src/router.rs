@@ -1,6 +1,7 @@
 use crate::{
     new_todo_resource::NewTodoResource, root_resource::RootResource, services::Services,
     todo_list_resource::TodoListResource, todo_resource::TodoResource,
+    updated_todo_resource::UpdatedTodoResource,
 };
 use axum::{
     Json, Router,
@@ -41,6 +42,23 @@ async fn add_new_todo(
         })
 }
 
+async fn update_todo(
+    Path(todo_id): Path<String>,
+    State(services): State<Services>,
+    Json(updated_todo): Json<UpdatedTodoResource>,
+) -> impl IntoResponse {
+    services
+        .todos()
+        .update(&todo_id, &updated_todo)
+        .map(|todo| (services.prefix(), todo))
+        .map(TodoResource::from)
+        .map_err(|error| {
+            tracing::error!(error);
+
+            StatusCode::INTERNAL_SERVER_ERROR
+        })
+}
+
 async fn remove_todo(
     Path(todo_id): Path<String>,
     State(services): State<Services>,
@@ -69,6 +87,9 @@ pub fn router(
     Ok(Router::new()
         .route("/", get(resources))
         .route("/items", get(get_all_todos))
-        .route("/items/{id}", put(add_new_todo).delete(remove_todo))
+        .route(
+            "/items/{id}",
+            put(add_new_todo).delete(remove_todo).post(update_todo),
+        )
         .with_state(services))
 }
