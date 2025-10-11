@@ -5,11 +5,15 @@ export interface TodoRemoved {
   readonly todoRemoved: (todoId: string) => void;
 }
 
+export interface TodoUpdated {
+  readonly todoUpdated: (todo: _Todo) => void;
+}
+
 export class Todo implements _Todo {
   #data: TodoFromWebClient;
-  #topic: TodoRemoved;
+  #topic: TodoRemoved & TodoUpdated;
 
-  constructor(topic: TodoRemoved, data: TodoFromWebClient) {
+  constructor(topic: TodoRemoved & TodoUpdated, data: TodoFromWebClient) {
     this.#data = data;
     this.#topic = topic;
   }
@@ -26,5 +30,11 @@ export class Todo implements _Todo {
     await this.#data.remove();
 
     this.#topic.todoRemoved(this.#data.id);
+  }
+
+  async update(this: this, data: { text: string }): Promise<void> {
+    const todo = await this.#data.update(data);
+
+    this.#topic.todoUpdated(new Todo(this.#topic, todo));
   }
 }

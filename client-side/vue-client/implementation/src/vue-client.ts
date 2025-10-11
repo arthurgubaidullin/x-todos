@@ -6,9 +6,11 @@ import type {
 } from "@x-todos/vue-client-interface";
 import type { WebClient } from "@x-todos/web-client";
 import { type Ref, onMounted, shallowRef } from "vue";
-import { type TodoRemoved, Todo } from "./todo.js";
+import { type TodoRemoved, type TodoUpdated, Todo } from "./todo.js";
 
-export class VueClient implements GetTodos, AddNewTodo, TodoRemoved {
+export class VueClient
+  implements GetTodos, AddNewTodo, TodoRemoved, TodoUpdated
+{
   #client: WebClient;
   #ref: Ref<ReadonlyArray<_Todo>>;
 
@@ -34,5 +36,11 @@ export class VueClient implements GetTodos, AddNewTodo, TodoRemoved {
 
   todoRemoved(this: this, todoId: string): void {
     this.#ref.value = this.#ref.value.filter((todo) => todo.id !== todoId);
+  }
+
+  todoUpdated(this: this, todo: _Todo): void {
+    this.#ref.value = this.#ref.value
+      .filter((_todo) => _todo.id !== todo.id)
+      .concat(todo);
   }
 }
