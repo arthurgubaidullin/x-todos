@@ -16,8 +16,8 @@ export class Todo implements _Todo {
     return this.#data.text;
   }
 
-  async update(this: this, data: Readonly<{ text: string }>): Promise<void> {
-    await fetch(this.#data.links.update, {
+  async update(this: this, data: Readonly<{ text: string }>): Promise<Todo> {
+    const response = await fetch(this.#data.links.update, {
       method: "POST",
       body: JSON.stringify({ text: data.text }),
       headers: {
@@ -25,6 +25,9 @@ export class Todo implements _Todo {
         "If-Match": `"${this.#data.version}"`,
       },
     });
+    const updatedTodo: TodoResource = await response.json();
+
+    return new Todo(updatedTodo);
   }
 
   async remove(this: this): Promise<void> {
