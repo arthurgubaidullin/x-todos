@@ -1,3 +1,4 @@
+use sha2::{Digest, Sha256};
 use std::sync::Arc;
 
 #[derive(Debug, Clone)]
@@ -23,5 +24,13 @@ impl Todo {
     #[must_use]
     pub fn id(&self) -> &str {
         &self.id
+    }
+
+    #[must_use]
+    pub fn version(&self) -> Box<str> {
+        let mut hasher = Sha256::new();
+        hasher.update(self.text());
+        let hash = hasher.finalize();
+        format!("{hash:?}").into()
     }
 }
