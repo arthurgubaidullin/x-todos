@@ -26,6 +26,10 @@ export class Todo implements _Todo {
     return this.#data.text;
   }
 
+  get version(): string {
+    return this.#data.version;
+  }
+
   async remove(this: this): Promise<void> {
     await this.#data.remove();
 
