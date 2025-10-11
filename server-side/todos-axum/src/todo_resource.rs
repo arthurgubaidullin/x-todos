@@ -7,6 +7,7 @@ struct Links {
     #[serde(rename = "self")]
     itself: Rc<str>,
     remove: Rc<str>,
+    update: Rc<str>,
 }
 
 #[derive(Debug, Serialize)]
@@ -24,7 +25,8 @@ impl From<(&Uri, todos::Todo)> for TodoResource {
             text: value.text().into(),
             links: Links {
                 itself: link.clone(),
-                remove: link,
+                remove: link.clone(),
+                update: link,
             },
         }
     }
