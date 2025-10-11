@@ -5,6 +5,7 @@ pub enum Error {
     Internal,
     AlreadyExists,
     NotExists,
+    Conflict,
 }
 
 impl Display for Error {
@@ -18,6 +19,9 @@ impl Display for Error {
             }
             Self::NotExists => {
                 write!(f, "Not exists.")
+            }
+            Self::Conflict => {
+                write!(f, "Conflict.")
             }
         }
     }
