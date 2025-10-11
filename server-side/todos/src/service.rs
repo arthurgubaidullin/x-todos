@@ -1,6 +1,9 @@
-use crate::{NewTodo, error::Error, persisted_todo::PersistedTodo, todo::Todo};
+use crate::{
+    NewTodo, error::Error, persisted_todo::PersistedTodo, todo::Todo, updated_todo::UpdatedTodo,
+};
 use std::{
     collections::HashMap,
+    ops::Not,
     sync::{Arc, RwLock},
 };
 
@@ -33,12 +36,39 @@ impl Service {
                 if db.contains_key(&todo_id) {
                     return Err(Error::AlreadyExists);
                 }
+
                 db.insert(todo_id, persisted_todo);
 
                 Ok(())
             })?;
 
         Ok(todo)
+    }
+
+    pub fn update(
+        &self,
+        todo_id: &str,
+        updated_todo: &impl UpdatedTodo,
+    ) -> Result<Todo, Box<dyn std::error::Error>> {
+        let todo = Todo::new(todo_id, updated_todo.text());
+
+        let updated_todo = self
+            .db
+            .write()
+            .map_err(|_| Error::Internal)
+            .and_then(|mut db| {
+                if db.contains_key(todo_id).not() {
+                    return Err(Error::NotExists);
+                }
+
+                let persisted_todo = PersistedTodo::new(todo.id(), todo.text());
+
+                let _ = db.insert(todo_id.into(), persisted_todo);
+
+                Ok(todo)
+            })?;
+
+        Ok(updated_todo)
     }
 
     pub fn remove(&self, todo_id: &str) -> Result<(), Box<dyn std::error::Error>> {
