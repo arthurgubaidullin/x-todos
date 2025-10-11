@@ -45,6 +45,16 @@ impl Service {
         Ok(todo)
     }
 
+    pub fn get(&self, todo_id: &str) -> Result<Todo, Box<dyn std::error::Error>> {
+        Ok(self
+            .db
+            .read()
+            .map_err(|_| Error::Internal)?
+            .get(todo_id)
+            .ok_or(Error::NotExists)
+            .map(Todo::from)?)
+    }
+
     pub fn update(
         &self,
         todo_id: &str,
