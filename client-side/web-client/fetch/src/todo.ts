@@ -16,6 +16,10 @@ export class Todo implements _Todo {
     return this.#data.text;
   }
 
+  get version(): string {
+    return this.#data.version;
+  }
+
   async update(this: this, data: Readonly<{ text: string }>): Promise<Todo> {
     const response = await fetch(this.#data.links.update, {
       method: "POST",
