@@ -14,6 +14,7 @@ struct Links {
 pub struct TodoResource {
     id: Box<str>,
     text: Box<str>,
+    version: Box<str>,
     links: Links,
 }
 
@@ -23,6 +24,7 @@ impl From<(&Uri, todos::Todo)> for TodoResource {
         Self {
             id: value.id().into(),
             text: value.text().into(),
+            version: value.version(),
             links: Links {
                 itself: link.clone(),
                 remove: link.clone(),
