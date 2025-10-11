@@ -31,6 +31,6 @@ impl Todo {
         let mut hasher = Sha256::new();
         hasher.update(self.text());
         let hash = hasher.finalize();
-        format!("{hash:?}").into()
+        format!("{hash:x}").into()
     }
 }
