@@ -58,6 +58,7 @@ impl Service {
     pub fn update(
         &self,
         todo_id: &str,
+        version: &str,
         updated_todo: &impl UpdatedTodo,
     ) -> Result<Todo, Box<dyn std::error::Error>> {
         let todo = Todo::new(todo_id, updated_todo.text());
@@ -67,8 +68,10 @@ impl Service {
             .write()
             .map_err(|_| Error::Internal)
             .and_then(|mut db| {
-                if db.contains_key(todo_id).not() {
-                    return Err(Error::NotExists);
+                let existed_todo = db.get(todo_id).ok_or(Error::NotExists).map(Todo::from)?;
+
+                if existed_todo.version().as_ref().eq(version).not() {
+                    return Err(Error::Conflict);
                 }
 
                 let persisted_todo = PersistedTodo::new(todo.id(), todo.text());

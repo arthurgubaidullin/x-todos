@@ -10,6 +10,11 @@ use axum::{
     response::IntoResponse,
     routing::{get, put},
 };
+use axum_extra::{
+    TypedHeader,
+    headers::{ETag, IfMatch},
+};
+use std::{ops::Not, str::FromStr};
 
 async fn get_all_todos(State(services): State<Services>) -> impl IntoResponse {
     services
@@ -44,12 +49,26 @@ async fn add_new_todo(
 
 async fn update_todo(
     Path(todo_id): Path<String>,
+    if_match: TypedHeader<IfMatch>,
     State(services): State<Services>,
     Json(updated_todo): Json<UpdatedTodoResource>,
 ) -> impl IntoResponse {
+    let existing_todo = services.todos().get(&todo_id).map_err(|e| {
+        tracing::error!(e);
+
+        StatusCode::PRECONDITION_FAILED
+    })?;
+
+    let etag = ETag::from_str(&format!("\"{}\"", existing_todo.version()))
+        .map_err(|_| StatusCode::INTERNAL_SERVER_ERROR)?;
+
+    if if_match.precondition_passes(&etag).not() {
+        return Err(StatusCode::PRECONDITION_FAILED);
+    }
+
     services
         .todos()
-        .update(&todo_id, &updated_todo)
+        .update(&todo_id, &existing_todo.version(), &updated_todo)
         .map(|todo| (services.prefix(), todo))
         .map(TodoResource::from)
         .map_err(|error| {
