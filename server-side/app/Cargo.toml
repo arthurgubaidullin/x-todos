@@ -8,6 +8,7 @@ publish = false
 axum = { version = "0.8" }
 todos = { path = "../todos" }
 todos-axum = { path = "../todos-axum" }
+todos-in-memory-repository = { path = "../todos-in-memory-repository" }
 tokio = { version = "1.47", features = ["full"] }
 tower-http = { version = "0.6.6", features = ["trace"] }
 tracing = "0.1"

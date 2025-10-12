@@ -659,6 +659,7 @@ dependencies = [
  "axum",
  "todos",
  "todos-axum",
+ "todos-in-memory-repository",
  "tokio",
  "tower-http",
  "tracing",
