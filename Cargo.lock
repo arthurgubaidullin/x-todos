@@ -775,6 +775,9 @@ dependencies = [
 [[package]]
 name = "todos-in-memory-repository"
 version = "0.1.0"
+dependencies = [
+ "todos",
+]
 
 [[package]]
 name = "tokio"
