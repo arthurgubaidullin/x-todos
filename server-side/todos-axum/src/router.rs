@@ -15,8 +15,11 @@ use axum_extra::{
     headers::{ETag, IfMatch},
 };
 use std::{ops::Not, str::FromStr};
+use todos::TodosRepository;
 
-async fn get_all_todos(State(services): State<Services>) -> impl IntoResponse {
+async fn get_all_todos<Repository: TodosRepository>(
+    State(services): State<Services<Repository>>,
+) -> impl IntoResponse {
     services
         .todos()
         .all()
@@ -29,9 +32,9 @@ async fn get_all_todos(State(services): State<Services>) -> impl IntoResponse {
         })
 }
 
-async fn add_new_todo(
+async fn add_new_todo<Repository: TodosRepository>(
     Path(todo_id): Path<String>,
-    State(services): State<Services>,
+    State(services): State<Services<Repository>>,
     Json(new_todo): Json<NewTodoResource>,
 ) -> impl IntoResponse {
     services
@@ -47,10 +50,10 @@ async fn add_new_todo(
         })
 }
 
-async fn update_todo(
+async fn update_todo<Repository: TodosRepository>(
     Path(todo_id): Path<String>,
     if_match: TypedHeader<IfMatch>,
-    State(services): State<Services>,
+    State(services): State<Services<Repository>>,
     Json(updated_todo): Json<UpdatedTodoResource>,
 ) -> impl IntoResponse {
     let existing_todo = services.todos().get(&todo_id).map_err(|e| {
@@ -68,7 +71,7 @@ async fn update_todo(
 
     services
         .todos()
-        .update(&todo_id, &existing_todo.version(), &updated_todo)
+        .update(&todo_id, existing_todo, &updated_todo)
         .map(|todo| (services.prefix(), todo))
         .map(TodoResource::from)
         .map_err(|error| {
@@ -78,9 +81,9 @@ async fn update_todo(
         })
 }
 
-async fn remove_todo(
+async fn remove_todo<Repository: TodosRepository>(
     Path(todo_id): Path<String>,
-    State(services): State<Services>,
+    State(services): State<Services<Repository>>,
 ) -> impl IntoResponse {
     services
         .todos()
@@ -93,13 +96,15 @@ async fn remove_todo(
         })
 }
 
-async fn resources(State(services): State<Services>) -> impl IntoResponse {
+async fn resources<Repository: TodosRepository>(
+    State(services): State<Services<Repository>>,
+) -> impl IntoResponse {
     RootResource::new(services.prefix())
 }
 
-pub fn router(
+pub fn router<Repository: TodosRepository>(
     prefix: &str,
-    todos_service: todos::Service,
+    todos_service: todos::Service<Repository>,
 ) -> Result<Router, Box<dyn std::error::Error>> {
     let services = Services::new(prefix.parse()?, todos_service);
 

@@ -1,13 +1,20 @@
 use axum::http::Uri;
+use todos::TodosRepository;
 
 #[derive(Debug, Clone)]
-pub struct Services {
+pub struct Services<Repository>
+where
+    Repository: TodosRepository,
+{
     prefix: Uri,
-    todos: todos::Service,
+    todos: todos::Service<Repository>,
 }
 
-impl Services {
-    pub const fn new(prefix: Uri, todos: todos::Service) -> Self {
+impl<Repository> Services<Repository>
+where
+    Repository: TodosRepository,
+{
+    pub const fn new(prefix: Uri, todos: todos::Service<Repository>) -> Self {
         Self { prefix, todos }
     }
 
@@ -15,7 +22,7 @@ impl Services {
         &self.prefix
     }
 
-    pub const fn todos(&self) -> &todos::Service {
+    pub const fn todos(&self) -> &todos::Service<Repository> {
         &self.todos
     }
 }

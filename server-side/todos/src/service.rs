@@ -1,21 +1,23 @@
 use crate::{
-    NewTodo, error::Error, persisted_todo::PersistedTodo, todo::Todo, updated_todo::UpdatedTodo,
-};
-use std::{
-    collections::HashMap,
-    ops::Not,
-    sync::{Arc, RwLock},
+    NewTodo, in_memory_repository::TodosInMemoryRepository, repository::TodosRepository,
+    todo::Todo, updated_todo::UpdatedTodo,
 };
 
 #[derive(Debug, Clone)]
-pub struct Service {
-    db: Arc<RwLock<HashMap<Box<str>, PersistedTodo>>>,
+pub struct Service<Repository>
+where
+    Repository: TodosRepository,
+{
+    repository: Repository,
 }
 
-impl Service {
+impl<Repository> Service<Repository>
+where
+    Repository: TodosRepository,
+{
     #[must_use]
-    pub fn new() -> Self {
-        Self { db: Arc::default() }
+    pub const fn new(repository: Repository) -> Self {
+        Self { repository }
     }
 
     pub fn add(
@@ -25,89 +27,42 @@ impl Service {
     ) -> Result<Todo, Box<dyn std::error::Error>> {
         let todo_id = Box::from(todo_id);
 
-        let persisted_todo = PersistedTodo::new(&todo_id, new_todo.text());
-
         let todo = Todo::new(&todo_id, new_todo.text());
 
-        self.db
-            .write()
-            .map_err(|_| Error::Internal)
-            .and_then(|mut db| {
-                if db.contains_key(&todo_id) {
-                    return Err(Error::AlreadyExists);
-                }
-
-                db.insert(todo_id, persisted_todo);
-
-                Ok(())
-            })?;
+        let todo = self.repository.add(todo)?;
 
         Ok(todo)
     }
 
     pub fn get(&self, todo_id: &str) -> Result<Todo, Box<dyn std::error::Error>> {
-        Ok(self
-            .db
-            .read()
-            .map_err(|_| Error::Internal)?
-            .get(todo_id)
-            .ok_or(Error::NotExists)
-            .map(Todo::from)?)
+        self.repository.get(todo_id)
     }
 
     pub fn update(
         &self,
         todo_id: &str,
-        version: &str,
+        existing_todo: Todo,
         updated_todo: &impl UpdatedTodo,
     ) -> Result<Todo, Box<dyn std::error::Error>> {
-        let todo = Todo::new(todo_id, updated_todo.text());
+        let updating_todo = Todo::new(todo_id, updated_todo.text());
 
-        let updated_todo = self
-            .db
-            .write()
-            .map_err(|_| Error::Internal)
-            .and_then(|mut db| {
-                let existed_todo = db.get(todo_id).ok_or(Error::NotExists).map(Todo::from)?;
-
-                if existed_todo.version().as_ref().eq(version).not() {
-                    return Err(Error::Conflict);
-                }
-
-                let persisted_todo = PersistedTodo::new(todo.id(), todo.text());
-
-                let _ = db.insert(todo_id.into(), persisted_todo);
-
-                Ok(todo)
-            })?;
+        let updated_todo = self.repository.update(existing_todo, updating_todo)?;
 
         Ok(updated_todo)
     }
 
     pub fn remove(&self, todo_id: &str) -> Result<(), Box<dyn std::error::Error>> {
-        Ok(self
-            .db
-            .write()
-            .map_err(|_| Error::Internal)?
-            .remove(todo_id)
-            .ok_or(Error::NotExists)
-            .map(|_| ())?)
+        self.repository.remove(todo_id)
     }
 
     pub fn all(&self) -> Result<Vec<Todo>, Box<dyn std::error::Error>> {
-        Ok(self
-            .db
-            .read()
-            .map_err(|_| Error::Internal)?
-            .values()
-            .map(Todo::from)
-            .collect())
+        self.repository.all()
     }
 }
 
-impl Default for Service {
+impl Default for Service<TodosInMemoryRepository> {
     fn default() -> Self {
-        Self::new()
+        Self::new(TodosInMemoryRepository::new())
     }
 }
 
@@ -135,7 +90,7 @@ mod tests {
 
     #[test]
     fn create() {
-        let todos = Service::new();
+        let todos = Service::new(TodosInMemoryRepository::new());
 
         assert_eq!(todos.all().unwrap().len(), 0);
     }
@@ -144,7 +99,7 @@ mod tests {
     fn add() {
         let new_todo = &NewTodoS::new("Add new todo");
 
-        let todos = Service::new();
+        let todos = Service::new(TodosInMemoryRepository::new());
 
         todos.add("test", new_todo).unwrap();
 
@@ -155,7 +110,7 @@ mod tests {
     fn add_twice() {
         let new_todo = &NewTodoS::new("Add new todo");
 
-        let todos = Service::new();
+        let todos = Service::new(TodosInMemoryRepository::new());
 
         todos.add("test", new_todo).unwrap();
 
@@ -166,7 +121,7 @@ mod tests {
     fn remove() {
         let new_todo = &NewTodoS::new("Add new todo");
 
-        let todos = Service::new();
+        let todos = Service::new(TodosInMemoryRepository::new());
 
         let todo_id = "test";
         todos.add(todo_id, new_todo).unwrap();
@@ -177,7 +132,7 @@ mod tests {
 
     #[test]
     fn remove_not_existed() {
-        let todos = Service::new();
+        let todos = Service::new(TodosInMemoryRepository::new());
 
         let todo_id = "test";
 

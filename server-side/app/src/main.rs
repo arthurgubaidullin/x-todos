@@ -18,7 +18,7 @@ async fn main() {
         .with(tracing_subscriber::fmt::layer())
         .init();
 
-    let todos_service = todos::Service::new();
+    let todos_service = todos::Service::new(todos::TodosInMemoryRepository::new());
 
     let todos_router =
         todos_axum::router("http://localhost:5173/api/todos", todos_service).unwrap();
