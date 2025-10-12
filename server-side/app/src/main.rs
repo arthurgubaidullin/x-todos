@@ -1,3 +1,5 @@
+use std::env;
+
 use axum::{Router, extract::MatchedPath, http::Request, response::Html, routing::get};
 use tower_http::trace::TraceLayer;
 use tracing::{info, info_span};
@@ -17,6 +19,12 @@ async fn main() {
         )
         .with(tracing_subscriber::fmt::layer())
         .init();
+
+    let port = env::var("PORT").unwrap_or_else(|_| "3000".to_string());
+
+    let host = env::var("HOST").unwrap_or_else(|_| "127.0.0.1".to_string());
+
+    let addr = format!("{host}:{port}");
 
     let todos_service =
         todos::Service::new(todos_in_memory_repository::TodosInMemoryRepository::new());
@@ -43,9 +51,7 @@ async fn main() {
             }),
         );
 
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
-        .await
-        .unwrap();
+    let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
 
     info!("listening on {}", listener.local_addr().unwrap());
 
