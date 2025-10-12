@@ -12,11 +12,7 @@ const todos = client.todos;
 <template>
   <h1>Todo list</h1>
   <ul>
-    <li
-      v-if="todos !== null"
-      v-for="todo in todos"
-      :key="`${todo.id}-${todo.version}`"
-    >
+    <li v-if="todos !== null" v-for="todo in todos" :key="todo.id">
       <Todo :data="todo" />
     </li>
   </ul>
