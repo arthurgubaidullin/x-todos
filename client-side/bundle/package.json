@@ -33,8 +33,16 @@
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arthurgubaidullin/x-todos.git"
+  },
+  "author": {
+    "email": "lapteuh+x-todos@gmail.com",
+    "name": "Artur Gubaidullin"
+  },
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "files": [
     "dist"
   ]
