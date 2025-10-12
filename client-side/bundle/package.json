@@ -12,7 +12,9 @@
     "prebuild": "rm -rf dist node_modules/.tmp/tsconfig.build.tsbuildinfo",
     "build": "tsc -p tsconfig.build.json",
     "test": "vitest . --run",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prepack": "mkdir -p node_modules && ln -s ../../../node_modules/@x-todos ./node_modules/@x-todos",
+    "postpack": "rm -rf ./node_modules/@x-todos"
   },
   "bundledDependencies": [
     "@x-todos/vue-client",
