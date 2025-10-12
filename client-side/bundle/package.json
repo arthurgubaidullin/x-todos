@@ -22,7 +22,12 @@
     "@x-todos/fetch-client",
     "@x-todos/web-client"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@x-todos/vue-client": "*",
+    "@x-todos/vue-client-interface": "*",
+    "@x-todos/fetch-client": "*",
+    "@x-todos/web-client": "*"
+  },
   "devDependencies": {
     "@x-todos/tsconfig": "*",
     "typescript": "^5.9.2",
@@ -37,7 +42,7 @@
     "name": "Artur Gubaidullin"
   },
   "license": "MIT",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "files": [
     "dist"
   ]
