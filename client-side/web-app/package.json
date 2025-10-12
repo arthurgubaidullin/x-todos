@@ -10,9 +10,7 @@
   },
   "dependencies": {
     "vue": "^3.5.21",
-    "@x-todos/fetch-client": "*",
-    "@x-todos/vue-client": "*",
-    "@x-todos/vue-client-interface": "*"
+    "@arthurgubaidullin/x-todos": "*"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",

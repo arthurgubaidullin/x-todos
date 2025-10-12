@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { FetchClient } from "@x-todos/fetch-client";
-import { VueClient } from "@x-todos/vue-client";
+import { FetchClient } from "@arthurgubaidullin/x-todos/web-client";
+import { VueClient } from "@arthurgubaidullin/x-todos/vue-client";
 import NewTodoForm from "./NewTodoForm.vue";
 import TodoList from "./TodoList.vue";
 

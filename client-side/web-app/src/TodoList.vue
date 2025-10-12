@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { GetTodos } from "@x-todos/vue-client-interface";
+import type { GetTodos } from "@arthurgubaidullin/x-todos/vue-client";
 import Todo from "./Todo.vue";
 
 const props = defineProps<{ client: GetTodos }>();

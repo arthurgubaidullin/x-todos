@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AddNewTodo } from "@x-todos/vue-client-interface";
+import type { AddNewTodo } from "@arthurgubaidullin/x-todos/vue-client";
 import { ref } from "vue";
 
 const props = defineProps<{ client: AddNewTodo }>();
