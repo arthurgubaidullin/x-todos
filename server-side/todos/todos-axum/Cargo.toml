@@ -7,5 +7,5 @@ edition = "2024"
 axum = "0.8"
 axum-extra = { version = "0.10", features = ["typed-header"] }
 serde = { version = "1.0", features = ["derive", "rc"] }
-todos = { path = "../todos" }
+todos = { path = "../service" }
 tracing = "0.1.41"
