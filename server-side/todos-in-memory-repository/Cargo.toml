@@ -4,4 +4,5 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-todos = { path = "../todos" }
+todos-rules = { path = "../todos-rules" }
+todos-repository = { path = "../todos-repository" }

@@ -1,4 +1,4 @@
-use crate::{NewTodo, in_memory_repository::TodosInMemoryRepository, updated_todo::UpdatedTodo};
+use crate::{NewTodo, updated_todo::UpdatedTodo};
 use todos_repository::TodosRepository;
 use todos_rules::Todo;
 
@@ -59,15 +59,10 @@ where
     }
 }
 
-impl Default for Service<TodosInMemoryRepository> {
-    fn default() -> Self {
-        Self::new(TodosInMemoryRepository::new())
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
+    use todos_in_memory_repository::*;
 
     #[derive(Debug, Clone)]
     pub struct NewTodoS {
