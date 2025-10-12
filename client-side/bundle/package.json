@@ -1,5 +1,5 @@
 {
-  "name": "@x-todos/bundle",
+  "name": "@arthurgubaidullin/x-todos",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
