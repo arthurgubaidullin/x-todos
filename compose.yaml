@@ -34,5 +34,3 @@ services:
       - "8080:80"
     environment:
       - NGINX_PORT=80
-
-
