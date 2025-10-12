@@ -26,8 +26,9 @@ impl Todo {
         &self.id
     }
 
-    pub fn update(&mut self, text: &str) {
-        self.text = text.into();
+    #[must_use]
+    pub fn update(&self, text: &str) -> Self {
+        Self::new(self.id(), text)
     }
 
     #[must_use]

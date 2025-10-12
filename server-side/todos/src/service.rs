@@ -39,11 +39,10 @@ where
 
     pub fn update(
         &self,
-        todo_id: &str,
         existing_todo: Todo,
         updated_todo: &impl UpdatedTodo,
     ) -> Result<Todo, Box<dyn std::error::Error>> {
-        let updating_todo = Todo::new(todo_id, updated_todo.text());
+        let updating_todo = existing_todo.update(updated_todo.text());
 
         let updated_todo = self.repository.update(existing_todo, updating_todo)?;
 

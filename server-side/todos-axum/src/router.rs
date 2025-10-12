@@ -71,7 +71,7 @@ async fn update_todo<Repository: TodosRepository>(
 
     services
         .todos()
-        .update(&todo_id, existing_todo, &updated_todo)
+        .update(existing_todo, &updated_todo)
         .map(|todo| (services.prefix(), todo))
         .map(TodoResource::from)
         .map_err(|error| {
