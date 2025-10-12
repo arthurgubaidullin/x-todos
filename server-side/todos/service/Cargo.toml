@@ -8,4 +8,4 @@ todos-rules = { path = "../rules" }
 todos-repository = { path = "../repository" }
 
 [dev-dependencies]
-todos-in-memory-repository = { path = "../todos-in-memory-repository" }
+todos-in-memory-repository = { path = "../in-memory-repository" }
