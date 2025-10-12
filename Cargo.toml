@@ -6,4 +6,5 @@ members = [
     "server-side/todos-axum",
     "server-side/todos-in-memory-repository",
     "server-side/todos-repository",
+    "server-side/todos-rules",
 ]
