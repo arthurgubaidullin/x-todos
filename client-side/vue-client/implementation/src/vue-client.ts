@@ -38,9 +38,9 @@ export class VueClient
     this.#ref.value = this.#ref.value.filter((todo) => todo.id !== todoId);
   }
 
-  todoUpdated(this: this, todo: _Todo): void {
+  todoUpdated(this: this, updatedTodo: _Todo): void {
     this.#ref.value = this.#ref.value
-      .filter((_todo) => _todo.id !== todo.id)
-      .concat(todo);
+      .filter((existingTodo) => !existingTodo.equals(updatedTodo))
+      .concat(updatedTodo);
   }
 }

@@ -19,11 +19,19 @@ export class Todo implements _Todo {
   }
 
   get id(): string {
-    return this.#data.id + "-" + this.#data.version;
+    return this.#data.id;
   }
 
   get text(): string {
     return this.#data.text;
+  }
+
+  get version(): string {
+    return this.#data.id + "-" + this.#data.version;
+  }
+
+  equals(this: this, other: _Todo): boolean {
+    return this.id === other.id;
   }
 
   async remove(this: this): Promise<void> {
