@@ -14,6 +14,12 @@
     "test": "vitest . --run",
     "lint": "eslint ."
   },
+  "bundledDependencies": [
+    "@x-todos/vue-client",
+    "@x-todos/vue-client-interface",
+    "@x-todos/fetch-client",
+    "@x-todos/web-client"
+  ],
   "dependencies": {
     "@x-todos/vue-client": "*",
     "@x-todos/vue-client-interface": "*",
@@ -25,5 +31,5 @@
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   },
-  "private": true
+  "version": "0.1.0"
 }
