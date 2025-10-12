@@ -7,7 +7,7 @@ publish = false
 [dependencies]
 axum = { version = "0.8" }
 todos = { path = "../todos/service" }
-todos-axum = { path = "../todos/todos-axum" }
+rest = { path = "../todos/rest" }
 todos-in-memory-repository = { path = "../todos/in-memory-repository" }
 tokio = { version = "1.47", features = ["full"] }
 tower-http = { version = "0.6.6", features = ["trace"] }

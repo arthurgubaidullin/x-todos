@@ -9,7 +9,7 @@ async fn main() {
         .with(
             tracing_subscriber::EnvFilter::try_from_default_env().unwrap_or_else(|_| {
                 format!(
-                    "todos-axum=debug,{}=debug,tower_http=debug,axum::rejection=trace",
+                    "rest=debug,{}=debug,tower_http=debug,axum::rejection=trace",
                     env!("CARGO_CRATE_NAME")
                 )
                 .into()
@@ -21,8 +21,7 @@ async fn main() {
     let todos_service =
         todos::Service::new(todos_in_memory_repository::TodosInMemoryRepository::new());
 
-    let todos_router =
-        todos_axum::router("http://localhost:5173/api/todos", todos_service).unwrap();
+    let todos_router = rest::router("http://localhost:5173/api/todos", todos_service).unwrap();
 
     let app = Router::new()
         .route("/", get(handler))
