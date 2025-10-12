@@ -33,7 +33,6 @@ services:
     ports:
       - "8080:80"
     environment:
-      - NGINX_HOST=
       - NGINX_PORT=80
 
 
