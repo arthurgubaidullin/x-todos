@@ -30,3 +30,4 @@ FROM nginx:stable-alpine-slim AS final
 ARG APP_NAME
 
 COPY --from=build /app/client-side/$APP_NAME/dist /usr/share/nginx/html
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
