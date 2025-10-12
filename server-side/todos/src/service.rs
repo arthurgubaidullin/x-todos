@@ -1,7 +1,8 @@
 use crate::{
     NewTodo, in_memory_repository::TodosInMemoryRepository, repository::TodosRepository,
-    todo::Todo, updated_todo::UpdatedTodo,
+    updated_todo::UpdatedTodo,
 };
+use todos_rules::Todo;
 
 #[derive(Debug, Clone)]
 pub struct Service<Repository>

@@ -1,4 +1,4 @@
-use crate::Todo;
+use todos_rules::Todo;
 
 pub trait TodosRepository
 where

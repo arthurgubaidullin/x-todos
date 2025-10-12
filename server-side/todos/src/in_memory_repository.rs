@@ -1,10 +1,10 @@
+use crate::{Error, persisted_todo::PersistedTodo, repository::TodosRepository};
 use std::{
     collections::HashMap,
     ops::Not,
     sync::{Arc, RwLock},
 };
-
-use crate::{Error, Todo, persisted_todo::PersistedTodo, repository::TodosRepository};
+use todos_rules::Todo;
 
 #[derive(Debug, Clone)]
 pub struct TodosInMemoryRepository {

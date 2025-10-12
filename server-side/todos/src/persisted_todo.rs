@@ -1,5 +1,5 @@
-use crate::todo::Todo;
 use std::sync::Arc;
+use todos_rules::Todo;
 
 #[derive(Debug, Clone)]
 pub struct PersistedTodo {
