@@ -21,4 +21,19 @@ services:
       - HOST=0.0.0.0
       - PORT=3000
 
+  client:
+    depends_on:
+      - server
+    build:
+      context: .
+      dockerfile: client.Dockerfile
+      args:
+        - APP_NAME=web-app
+      target: final
+    ports:
+      - "8080:80"
+    environment:
+      - NGINX_HOST=
+      - NGINX_PORT=80
+
 
