@@ -1,9 +1,10 @@
-use crate::{Error, persisted_todo::PersistedTodo, repository::TodosRepository};
+use crate::{Error, persisted_todo::PersistedTodo};
 use std::{
     collections::HashMap,
     ops::Not,
     sync::{Arc, RwLock},
 };
+use todos_repository::TodosRepository;
 use todos_rules::Todo;
 
 #[derive(Debug, Clone)]

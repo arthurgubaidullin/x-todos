@@ -5,3 +5,4 @@ edition = "2024"
 
 [dependencies]
 todos-rules = { path = "../todos-rules" }
+todos-repository = { path = "../todos-repository" }

@@ -758,6 +758,7 @@ dependencies = [
 name = "todos"
 version = "0.1.0"
 dependencies = [
+ "todos-repository",
  "todos-rules",
 ]
 
@@ -782,6 +783,9 @@ dependencies = [
 [[package]]
 name = "todos-repository"
 version = "0.1.0"
+dependencies = [
+ "todos-rules",
+]
 
 [[package]]
 name = "todos-rules"

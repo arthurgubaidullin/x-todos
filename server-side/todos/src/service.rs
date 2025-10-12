@@ -1,7 +1,5 @@
-use crate::{
-    NewTodo, in_memory_repository::TodosInMemoryRepository, repository::TodosRepository,
-    updated_todo::UpdatedTodo,
-};
+use crate::{NewTodo, in_memory_repository::TodosInMemoryRepository, updated_todo::UpdatedTodo};
+use todos_repository::TodosRepository;
 use todos_rules::Todo;
 
 #[derive(Debug, Clone)]
