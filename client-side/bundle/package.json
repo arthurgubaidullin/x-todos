@@ -16,6 +16,9 @@
     "prepack": "mkdir -p node_modules && ln -s ../../../node_modules/@x-todos ./node_modules/@x-todos",
     "postpack": "rm -rf ./node_modules/@x-todos"
   },
+  "peerDependencies": {
+    "vue": "^3.5.22"
+  },
   "dependencies": {},
   "devDependencies": {
     "@x-todos/fetch-client": "*",
