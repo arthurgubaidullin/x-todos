@@ -33,4 +33,6 @@ services:
     ports:
       - "8080:80"
     environment:
+      - SERVER_HOST=server
+      - SERVER_PORT=3000
       - NGINX_PORT=80
