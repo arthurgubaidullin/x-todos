@@ -26,6 +26,10 @@ impl Todo {
         &self.id
     }
 
+    pub fn update(&mut self, text: &str) {
+        self.text = text.into();
+    }
+
     #[must_use]
     pub fn version(&self) -> Box<str> {
         let mut hasher = Sha256::new();
