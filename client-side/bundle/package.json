@@ -10,26 +10,20 @@
   },
   "scripts": {
     "prebuild": "rm -rf dist node_modules/.tmp/tsconfig.build.tsbuildinfo",
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsdown --tsconfig tsconfig.build.json",
     "test": "vitest . --run",
     "lint": "eslint .",
     "prepack": "mkdir -p node_modules && ln -s ../../../node_modules/@x-todos ./node_modules/@x-todos",
     "postpack": "rm -rf ./node_modules/@x-todos"
   },
-  "bundleDependencies": [
-    "@x-todos/vue-client",
-    "@x-todos/vue-client-interface",
-    "@x-todos/fetch-client",
-    "@x-todos/web-client"
-  ],
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "@x-todos/fetch-client": "*",
     "@x-todos/vue-client": "*",
     "@x-todos/vue-client-interface": "*",
-    "@x-todos/fetch-client": "*",
-    "@x-todos/web-client": "*"
-  },
-  "devDependencies": {
+    "@x-todos/web-client": "*",
     "@x-todos/tsconfig": "*",
+    "tsdown": "^0.15.6",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   },
@@ -42,7 +36,7 @@
     "name": "Artur Gubaidullin"
   },
   "license": "MIT",
-  "version": "0.1.4",
+  "version": "0.1.7",
   "files": [
     "dist"
   ]
