@@ -29,8 +29,11 @@ async fn main() {
     let todos_service =
         todos::Service::new(todos_in_memory_repository::TodosInMemoryRepository::new());
 
+    let client_entrypoint =
+        env::var("TODOS_BASE_URL").unwrap_or_else(|_| "http://localhost:5173/api".to_string());
+
     let todos_router =
-        todos_rest::router("http://localhost:5173/api/todos", todos_service).unwrap();
+        todos_rest::router(&format!("{client_entrypoint}/todos"), todos_service).unwrap();
 
     let app = Router::new()
         .route("/", get(handler))

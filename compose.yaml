@@ -20,6 +20,7 @@ services:
     environment:
       - HOST=0.0.0.0
       - PORT=3000
+      - TODOS_BASE_URL=/api
 
   client:
     depends_on:
