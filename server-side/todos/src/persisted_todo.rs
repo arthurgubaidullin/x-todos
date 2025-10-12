@@ -14,10 +14,23 @@ impl PersistedTodo {
             text: text.into(),
         }
     }
+
+    pub fn id(&self) -> &str {
+        &self.id
+    }
 }
 
 impl From<&PersistedTodo> for Todo {
     fn from(todo: &PersistedTodo) -> Self {
         Self::new(&todo.id, &todo.text)
+    }
+}
+
+impl From<&Todo> for PersistedTodo {
+    fn from(value: &Todo) -> Self {
+        Self {
+            id: value.id().into(),
+            text: value.text().into(),
+        }
     }
 }
