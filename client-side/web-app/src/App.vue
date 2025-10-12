@@ -4,7 +4,7 @@ import { VueClient } from "@x-todos/vue-client";
 import NewTodoForm from "./NewTodoForm.vue";
 import TodoList from "./TodoList.vue";
 
-const webClient = new FetchClient("http://localhost:5173/api/todos");
+const webClient = new FetchClient("/api/todos");
 const client = new VueClient(webClient);
 </script>
 
