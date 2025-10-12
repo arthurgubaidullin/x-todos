@@ -1,3 +1,8 @@
 [workspace]
 resolver = "3"
-members = [ "server-side/app","server-side/todos", "server-side/todos-axum"]
+members = [
+    "server-side/app",
+    "server-side/todos",
+    "server-side/todos-axum",
+    "server-side/todos-in-memory-repository",
+]
