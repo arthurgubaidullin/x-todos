@@ -6,6 +6,7 @@
     "client-side/tools/*",
     "client-side/web-client/*",
     "client-side/vue-client/*",
+    "client-side/bundle",
     "client-side/web-app"
   ],
   "devDependencies": {
