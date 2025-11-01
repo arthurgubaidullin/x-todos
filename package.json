@@ -10,7 +10,7 @@
     "client-side/web-app"
   ],
   "devDependencies": {
-    "@eslint/js": "^9.36.0",
+    "@eslint/js": "^9.39.0",
     "@types/node": "^24.7.0",
     "@x-todos/tsconfig": "*",
     "eslint": "^9.36.0",
